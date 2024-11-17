@@ -34,13 +34,13 @@ def main():
         st.header("TEST: GPT-4o + DFBRAG")
         test_chat(client, pinecone_index, model_name="gpt-4o")
 
-    with tab3:
-        st.header("SMART CONTROL: o1-preview")
-        control_chat(model_name="o1-preview")
+    #with tab3:
+        #st.header("SMART CONTROL: o1-preview")
+        #control_chat(model_name="o1-preview")
 
-    with tab4:
-        st.header("SMART TEST: o1-preview + DFBRAG")
-        test_chat(client, pinecone_index, model_name="o1-preview")
+   # with tab4:
+        #st.header("SMART TEST: o1-preview + DFBRAG")
+        #test_chat(client, pinecone_index, model_name="o1-preview")
 
 def control_chat(model_name):
      # Use a unique key for each session state
