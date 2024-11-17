@@ -18,12 +18,12 @@ def main():
     client = OpenAI(api_key=openai_key)
 
 
-    # Create four tabs
-    tab1, tab2, tab3, tab4 = st.tabs([
+    # Create four tabs tab3, tab4 
+    tab1, tab2 = st.tabs([
         "CONTROL: GPT-4o",
         "TEST: GPT-4o + DFBRAG",
-        "SMART CONTROL: o1-preview",
-        "SMART TEST: o1-preview + DFBRAG"
+        #"SMART CONTROL: o1-preview",
+        #"SMART TEST: o1-preview + DFBRAG"
     ])
 
     with tab1:
