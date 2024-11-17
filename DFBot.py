@@ -44,11 +44,11 @@ def main():
 
 def control_chat(model_name):
      # Use a unique key for each session state
-    history_key = f'control_history_{model_name}'
-    input_key = f'control_input_{model_name}'
+    #history_key = f'control_history_{model_name}'
+    #input_key = f'control_input_{model_name}'
     # Use a unique key for each session state
-    if history_key not in st.session_state:
-        st.session_state[history_key] = []
+    #if history_key not in st.session_state:
+        #st.session_state[history_key] = []
 
     user_input = st.text_input("You:", key=input_key)
     if user_input:
