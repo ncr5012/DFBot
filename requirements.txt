@@ -2,7 +2,3 @@ streamlit
 openai
 pinecone-client
 langchain
-pinecone
-langchain.embeddings.openai
-os
-
