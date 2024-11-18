@@ -20,11 +20,11 @@ def main():
 
 
     # Create four tabs tab3, tab4 
-    tab1, tab2 = st.tabs([
+    tab1, tab2, tab3, tab4 = st.tabs([
         "CONTROL: GPT-4o",
         "TEST: GPT-4o + DFBRAG",
-        #"SMART CONTROL: o1-preview",
-        #"SMART TEST: o1-preview + DFBRAG"
+        "SMARTER MATH/LOGIC CONTROL: o1-preview",
+        "SMARTER MATH/LOGIC TEST: o1-preview + DFBRAG"
     ])
 
     with tab1:
@@ -35,13 +35,13 @@ def main():
         st.header("TEST: GPT-4o + DFBRAG")
         test_chat(client, pinecone_index, model_name="gpt-4o")
 
-    #with tab3:
-        #st.header("SMART CONTROL: o1-preview")
-        #control_chat(model_name="o1-preview")
+    with tab3:
+        st.header("SMART CONTROL: o1-preview")
+        control_chat(model_name="o1-preview")
 
-   # with tab4:
-        #st.header("SMART TEST: o1-preview + DFBRAG")
-        #test_chat(client, pinecone_index, model_name="o1-preview")
+    with tab4:
+        st.header("SMART TEST: o1-preview + DFBRAG")
+        test_chat(client, pinecone_index, model_name="o1-preview")
 
 def control_chat(client, model_name):
      # Use a unique key for each session state
@@ -56,14 +56,22 @@ def control_chat(client, model_name):
         # Append user input to history
         st.session_state[history_key].append(("You", user_input))
 
+         # Prepare messages based on model
+        if model_name == "o1-preview":
+            messages = [
+                {"role": "user", "content": user_input}
+            ]
+        else:
+            messages = [
+                {"role": "system", "content": "You are an expert assistant helping actuaries create Defined Benefit Pension Plans."},
+                {"role": "user", "content": user_input}
+            ]
+
 
         # Get response from OpenAI using augmented input
         completion = client.chat.completions.create(
           model=model_name,
-          messages=[
-            {"role": "system", "content": "You are an expert assistant helping actuaries create Defined Benefit Pension Plans."},
-            {"role": "user", "content": user_input}
-          ]
+          messages=messages
         )
         assistant_reply = completion.choices[0].message.content.strip()
 
@@ -98,6 +106,17 @@ def test_chat(client, pinecone_index, model_name):
         # Append user input to history
         st.session_state[history_key].append(("You", user_input))
 
+         # Prepare messages based on model
+        if model_name == "o1-preview":
+            messages = [
+                {"role": "user", "content": user_input}
+            ]
+        else:
+            messages = [
+                {"role": "system", "content": "You are an expert assistant helping actuaries create Defined Benefit Pension Plans."},
+                {"role": "user", "content": user_input}
+            ]
+
         # Generate embedding for the user input
         embedding = get_embedding(user_input)
 
@@ -117,10 +136,7 @@ def test_chat(client, pinecone_index, model_name):
         # Get response from OpenAI using augmented input
         completion = client.chat.completions.create(
           model=model_name,
-          messages=[
-            {"role": "system", "content": "You are an expert assistant helping actuaries create Defined Benefit Pension Plans."},
-            {"role": "user", "content": augmented_input}
-          ]
+          messages=messages
         )
         assistant_reply = completion.choices[0].message.content.strip()
 
