@@ -18,16 +18,6 @@ def main():
     pinecone_index = pc.Index('carmen')
     client = OpenAI(api_key=openai_key)
 
-    def get_embedding(text, model="text-embedding-3-large"):
-        text = text.replace("\n", " ")
-        # Adjusted rate limiting: sleep for 20 seconds to comply with 3 requests/minute
-        time.sleep(0.0001)
-        response = client.embeddings.create(input=[text], model=model)
-        #print("Response object type:", type(response))  # Debug: Check the type of response
-        #print("Response content:", response)  # Debug: Print the response to understand its structure
-
-        return client.embeddings.create(input=[text], model=model).data[0].embedding
-
 
     # Create four tabs tab3, tab4 
     tab1, tab2 = st.tabs([
@@ -118,12 +108,8 @@ def test_chat(client, pinecone_index, model_name):
             #include_metadata=True
         )
 
-        # Retrieve the most relevant document
-        if query_results and 'matches' in query_results and query_results['matches']:
-            top_match = query_results['matches'][0]
-            reference_text = top_match['metadata'].get('text', '')
-        else:
-            reference_text = ''
+        reference_text = pinecone_index.fetch([query_results_one['matches'][0]['id']])
+        reference_text = text_one['vectors'][query_results_one['matches'][0]['id']]['metadata']['text']
 
         # Combine user input with reference text
         augmented_input = f"{user_input} /// here is a reference text related to this query: {reference_text}"
