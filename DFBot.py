@@ -44,8 +44,8 @@ def main():
 
 def control_chat(model_name):
      # Use a unique key for each session state
-    history_key = f'control_history_{model_name}'
-    input_key = f'control_input_{model_name}'
+    history_key = f'control_history_control_{model_name}'
+    input_key = f'control_input_control_{model_name}'
     # Use a unique key for each session state
     if history_key not in st.session_state:
         st.session_state[history_key] = []
@@ -75,8 +75,8 @@ def control_chat(model_name):
 
 def test_chat(client, pinecone_index, model_name):
     # Use a unique key for each session state
-    history_key = f'control_history_{model_name}'
-    input_key = f'control_input_{model_name}'
+    history_key = f'control_history_test_{model_name}'
+    input_key = f'control_input_test_{model_name}'
     # Use a unique key for each session state
     if history_key not in st.session_state:
         st.session_state[history_key] = []
