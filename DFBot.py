@@ -37,7 +37,7 @@ def main():
 
     with tab3:
         st.header("SMART CONTROL: o1-preview")
-        control_chat(model_name="o1-preview")
+        control_chat(client, model_name="o1-preview")
 
     with tab4:
         st.header("SMART TEST: o1-preview + DFBRAG")
