@@ -108,8 +108,8 @@ def test_chat(client, pinecone_index, model_name):
             #include_metadata=True
         )
 
-        reference_text = pinecone_index.fetch([query_results_one['matches'][0]['id']])
-        reference_text = text_one['vectors'][query_results_one['matches'][0]['id']]['metadata']['text']
+        reference_text = pinecone_index.fetch([query_results['matches'][0]['id']])
+        reference_text = reference_text['vectors'][query_results['matches'][0]['id']]['metadata']['text']
 
         # Combine user input with reference text
         augmented_input = f"{user_input} /// here is a reference text related to this query: {reference_text}"
