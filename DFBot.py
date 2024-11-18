@@ -3,9 +3,10 @@ from openai import OpenAI
 from pinecone import Pinecone, ServerlessSpec
 import os
 from langchain.embeddings.openai import OpenAIEmbeddings
+import time
 
 def main():
-    st.title("Simple Chatbot Interface")
+    st.title("Defined Benefit Pension Bot")
 
     # Set up API keys (use environment variables)
     openai_key = st.secrets["OPENAI_API_KEY"]
@@ -16,6 +17,16 @@ def main():
     pc = Pinecone(api_key=pinecone_api_key)
     pinecone_index = pc.Index('carmen')
     client = OpenAI(api_key=openai_key)
+
+    def get_embedding(text, model="text-embedding-3-large"):
+        text = text.replace("\n", " ")
+        # Adjusted rate limiting: sleep for 20 seconds to comply with 3 requests/minute
+        time.sleep(0.0001)
+        response = client.embeddings.create(input=[text], model=model)
+        #print("Response object type:", type(response))  # Debug: Check the type of response
+        #print("Response content:", response)  # Debug: Print the response to understand its structure
+
+        return client.embeddings.create(input=[text], model=model).data[0].embedding
 
 
     # Create four tabs tab3, tab4 
@@ -74,6 +85,17 @@ def control_chat(client, model_name):
         st.write(f"**{speaker}:** {message}")
 
 def test_chat(client, pinecone_index, model_name):
+
+    def get_embedding(text, model="text-embedding-3-large"):
+        text = text.replace("\n", " ")
+        # Adjusted rate limiting: sleep for 20 seconds to comply with 3 requests/minute
+        time.sleep(0.0001)
+        response = client.embeddings.create(input=[text], model=model)
+        #print("Response object type:", type(response))  # Debug: Check the type of response
+        #print("Response content:", response)  # Debug: Print the response to understand its structure
+
+        return client.embeddings.create(input=[text], model=model).data[0].embedding
+    
     # Use a unique key for each session state
     history_key = f'control_history_test_{model_name}'
     input_key = f'control_input_test_{model_name}'
