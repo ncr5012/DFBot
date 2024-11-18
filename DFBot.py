@@ -32,7 +32,7 @@ def main():
         control_chat(client, model_name="gpt-4o")
 
     with tab2:
-        st.header("TEST: GPT-4o + DFBRAG")
+        st.header("TEST: GPT-4o + DBRAG")
         test_chat(client, pinecone_index, model_name="gpt-4o")
 
     with tab3:
@@ -40,7 +40,7 @@ def main():
         control_chat(client, model_name="o1-preview")
 
     with tab4:
-        st.header("SMART TEST: o1-preview + DFBRAG")
+        st.header("SMART TEST: o1-preview + DBRAG")
         test_chat(client, pinecone_index, model_name="o1-preview")
 
 def control_chat(client, model_name):
