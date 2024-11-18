@@ -42,7 +42,7 @@ def main():
         #st.header("SMART TEST: o1-preview + DFBRAG")
         #test_chat(client, pinecone_index, model_name="o1-preview")
 
-def control_chat(model_name):
+def control_chat(client, model_name):
      # Use a unique key for each session state
     history_key = f'control_history_control_{model_name}'
     input_key = f'control_input_control_{model_name}'
