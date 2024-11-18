@@ -28,7 +28,7 @@ def main():
 
     with tab1:
         st.header("CONTROL: GPT-4o")
-        control_chat(model_name="gpt-4o")
+        control_chat(client, model_name="gpt-4o")
 
     with tab2:
         st.header("TEST: GPT-4o + DFBRAG")
